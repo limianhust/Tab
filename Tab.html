@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://js.jirengu.com
+
+Copyright (c) 2017 by anonymous (http://js.jirengu.com/zirelekoyi/2/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Tab</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        ul,li{
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .tab{
+            width: 224px;
+        }
+        .tab .tab-button{
+            display: flex;
+            flex-wrap: nowrap;
+            justify-content: flex-start
+        }
+        .tab .tab-button .active{
+            background-color: #ccc;
+        }
+        .tab .tab-button li{
+            padding: 0.2em 2em;
+            border: 1px solid #ccc;
+        }
+        .tab .tab-content{
+            position: relative;
+            height: 100px;
+            border: 1px solid #ccc;
+        }
+        .tab .tab-content li{
+            position: absolute;
+            left: 0;
+            top: 0;
+            display: none;
+        }
+        .tab .tab-content .show{
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="tab">
+        <ul class="tab-button">
+            <li class="active">1</li>
+            <li>2</li>
+            <li>3</li>
+        </ul>
+        <ul class="tab-content">
+            <li class="show">content1</li>
+            <li>content2</li>
+            <li>content3</li>
+        </ul>     
+    </div>
+    <div class="tab">
+        <ul class="tab-button">
+            <li class="active">1</li>
+            <li>2</li>
+            <li>3</li>
+        </ul>
+        <ul class="tab-content">
+            <li class="show">content1</li>
+            <li>content2</li>
+            <li>content3</li>
+        </ul>     
+    </div>
+    <script src='http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js' ></script>
+
+    <script>
+
+        function Tab($node) {
+            var $nodeChildren = $node.children('ul')
+            
+            this.$tabButton = $nodeChildren.eq(0)
+            this.$tabContent = $nodeChildren.eq(1)
+            //console.log(this.$tabContent)
+            this.bind()
+        }
+        Tab.prototype.bind = function () {
+            var _this = this
+            this.$tabButton.on('click',function(e){
+                $(e.target).siblings().removeClass('active')
+                $(e.target).addClass('active')
+                var index = $(e.target).index()
+                //console.log(_this.$tabContent.children())
+                
+                _this.$tabContent.children().removeClass('show')
+                _this.$tabContent.children().eq(index).addClass('show')
+            })
+        }
+        // new Tab($('.tab'))
+
+
+
+        var Tab = (function () {
+            function _Tab($node) {
+            var $nodeChildren = $node.children('ul')
+            
+            this.$tabButton = $nodeChildren.eq(0)
+            this.$tabContent = $nodeChildren.eq(1)
+            //console.log(this.$tabContent)
+            this.bind()
+        }
+        _Tab.prototype.bind = function () {
+            var _this = this
+            this.$tabButton.on('click',function(e){
+                $(e.target).siblings().removeClass('active')
+                $(e.target).addClass('active')
+                var index = $(e.target).index()
+                //console.log(_this.$tabContent.children())
+                
+                _this.$tabContent.children().removeClass('show')
+                _this.$tabContent.children().eq(index).addClass('show')
+            })
+        }
+        return {
+                init: function ($nodes) {
+                    $nodes.each(function (index,node) {
+                        new _Tab($(node))
+                    })
+                }
+        }
+        })()
+        Tab.init($('.tab'))
+    </script>
+</body>
+</html>
